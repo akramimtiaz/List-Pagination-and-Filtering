@@ -60,6 +60,25 @@ const appendPageLinks = (studentList) => {
       }
    }
 }
+
+//Adds the 'active' class to the page link selected so it is highlighted via CSS.
+const updateActiveLink = (pageSelected) => {
+    
+   //obtain all LI elements within Pagination UL 
+   const paginationList = paginationDiv.firstElementChild;
+   const pages = paginationList.children; 
+
+   for(let i=0; i<pages.length; i++){
+      //obtain the A element within the LI element
+      const page = pages[i].firstElementChild;
+      //Add the 'active' class exclusively to the link that matches the selected page
+      if(page.textContent === pageSelected){
+         page.className = "active";
+      }else{
+         page.className = "";
+      }
+   }
+}
    
 //key elements within the page
 const pageDiv        = document.querySelector('.page');
@@ -87,5 +106,6 @@ paginationDiv.addEventListener('click', (e) => {
       const pageSelected = e.target.textContent; 
       e.preventDefault();
       showPage(parseInt(pageSelected), currentList);
+      updateActiveLink(pageSelected);
    }
 });
