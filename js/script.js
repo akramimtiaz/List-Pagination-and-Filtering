@@ -23,8 +23,6 @@ searchDiv.className = "student-search";
 searchInput.placeholder = "Search for students...";
 searchButton.textContent = "Search";
 
-/*appends html elements, element on the left is appended to the element on the right.
-i.e. searchButton ---APPENDED-TO--- searchDiv ---APPENDED-TO--- pageHeader*/
 appendElements([searchInput, searchDiv]);
 appendElements([searchButton, searchDiv, pageHeader]);
 
@@ -36,8 +34,7 @@ pageDiv.insertBefore(noResults, pageHeader.nextElementSibling);
 
 
 /*event listener for pagination menu. On click, 
-show the page that was selected and set the selected link to the active status so it highlights.
-*/
+show the page that was selected and set the selected link to the active status.*/
 paginationDiv.addEventListener('click', (e) => {
    if(e.target.tagName === 'A'){
       const pageSelected = e.target.textContent; 
@@ -48,8 +45,7 @@ paginationDiv.addEventListener('click', (e) => {
 });
 
 /*event listeners for search-input and search-button. Extract the current value 
-in the searchInput field to determine the set of matching students.
-*/
+in the searchInput field and display the set of matching students.*/
 searchInput.addEventListener('keyup', (e) => {
    searchStudents(searchInput.value);
 });
