@@ -2,6 +2,15 @@
 Treehouse Techdegree: FSJS project 2 - List Filter and Pagination
 ******************************************/
 
+
+/*appends html elements from left to right. e.g. appendElements([h1, div, body])
+h1 ---APPENDED-TO--- div ---APPENDED-TO--- body*/
+const appendElements = (elements) => {
+   for(let i=0; i<elements.length-1; i++){
+      elements[i+1].appendChild(elements[i]);
+   }
+}
+
 //Creates a pagination menu
 const appendPageLinks = (studentList) => {
 
@@ -31,7 +40,26 @@ const appendPageLinks = (studentList) => {
 
     //UL element attached to Pagination container div
     pagination.appendChild(paginationList);
+    //requests the 1st page of the current list to be shown
+    showPage(1, currentList);
  }
+
+ /*Display students associated with the Page Number selected, achieved using the student's array index
+ E.g. 24th Student => Array Index [23]. (23+1)/10 => 2.4, ROUND UP (2.4) => 3. 
+ Therefore, 24th Student => 3rd page */
+ const showPage = (selectedPage, studentList) => {
+    
+   for(let i=0; i<studentList.length; i++){
+      //determine the student's associated page number
+      const studentLocation = Math.ceil((i+1)/10);
+      //only show those student's whose associated page number match the page link selected.
+      if ( studentLocation === selectedPage ) {
+            studentList[i].style.display = 'list-item';
+      }else{
+            studentList[i].style.display = 'none';
+      }
+   }
+}
    
 //key elements within the page
 const pageDiv        = document.querySelector('.page');
@@ -49,3 +77,15 @@ pageDiv.appendChild(paginationDiv);
 
 //creation of pagination menu
 appendPageLinks(currentList);
+
+
+/*event listener for pagination menu. On click, 
+show the page that was selected and set the selected link to the active status so it highlights.
+*/
+paginationDiv.addEventListener('click', (e) => {
+   if(e.target.tagName === 'A'){
+      const pageSelected = e.target.textContent; 
+      e.preventDefault();
+      showPage(parseInt(pageSelected), currentList);
+   }
+});
