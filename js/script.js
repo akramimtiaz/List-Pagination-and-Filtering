@@ -1,50 +1,51 @@
 /******************************************
-Treehouse Techdegree:
-FSJS project 2 - List Filter and Pagination
+Treehouse Techdegree: FSJS project 2 - List Filter and Pagination
 ******************************************/
+
+//Creates a pagination menu
+const appendPageLinks = (studentList) => {
+
+   //removes UL elem within Pagination Div if it exists - allows us to reconstruct the pagination menu as the user performs search.
+    const pagination = document.querySelector('.pagination');
+    if(pagination.hasChildNodes() === true){
+       pagination.removeChild(pagination.firstElementChild);
+    }
+    
+    //creation of new UL element - used to contain page links
+    const paginationList = document.createElement('ul');
+    //determines number of page links required for pagination menu.
+    const pages = Math.ceil(studentList.length/10);
+    
+    //creates appropriate number of page links and appends them to the newly created UL element
+    for(let i=1; i<=pages; i++){
+       const pageItem = document.createElement('li');
+       const a = document.createElement('a');
+ 
+       a.textContent = i;
+       a.href = "#";
+       //assigns the class of active to the 1st page link
+       i === 1 ? a.className="active" : a.className="";
+ 
+       appendElements([a, pageItem, paginationList]);
+    }
+
+    //UL element attached to Pagination container div
+    pagination.appendChild(paginationList);
+ }
    
-// Study guide for this project - https://drive.google.com/file/d/1OD1diUsTMdpfMDv677TfL1xO2CEkykSz/view?usp=sharing
+//key elements within the page
+const pageDiv        = document.querySelector('.page');
+const listOfStudents = document.querySelector('.student-list').children;
+const pageHeader     = document.querySelector('.page-header');
 
+/*This variable stores the current list of students, initialized to the entire list at first
+however will change once search functionality is used.*/
+let currentList = listOfStudents;
 
-/*** 
-   Add your global variables that store the DOM elements you will 
-   need to reference and/or manipulate. 
-   
-   But be mindful of which variables should be global and which 
-   should be locally scoped to one of the two main functions you're 
-   going to create. A good general rule of thumb is if the variable 
-   will only be used inside of a function, then it can be locally 
-   scoped to that function.
-***/
+//creation of the pagination div and attachment to the containing page div
+const paginationDiv = document.createElement('div');
+paginationDiv.className = "pagination";
+pageDiv.appendChild(paginationDiv);
 
-
-
-
-/*** 
-   Create the `showPage` function to hide all of the items in the 
-   list except for the ten you want to show.
-
-   Pro Tips: 
-     - Keep in mind that with a list of 54 students, the last page 
-       will only display four.
-     - Remember that the first student has an index of 0.
-     - Remember that a function `parameter` goes in the parens when 
-       you initially define the function, and it acts as a variable 
-       or a placeholder to represent the actual function `argument` 
-       that will be passed into the parens later when you call or 
-       "invoke" the function 
-***/
-
-
-
-
-/*** 
-   Create the `appendPageLinks function` to generate, append, and add 
-   functionality to the pagination buttons.
-***/
-
-
-
-
-
-// Remember to delete the comments that came with this file, and replace them with your own code comments.
+//creation of pagination menu
+appendPageLinks(currentList);
