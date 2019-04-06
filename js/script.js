@@ -98,6 +98,28 @@ pageDiv.appendChild(paginationDiv);
 appendPageLinks(currentList);
 
 
+//creation of the search elements with their various attributes
+const searchDiv = document.createElement('div');
+const searchInput = document.createElement('input');
+const searchButton = document.createElement('button');
+
+searchDiv.className = "student-search";
+searchInput.placeholder = "Search for students...";
+searchButton.textContent = "Search";
+
+/*appends html elements, element on the left is appended to the element on the right.
+i.e. searchButton ---APPENDED-TO--- searchDiv ---APPENDED-TO--- pageHeader*/
+appendElements([searchInput, searchDiv]);
+appendElements([searchButton, searchDiv, pageHeader]);
+
+//creation of the H3 element used to indicate no match results.
+const noResults = document.createElement('h3');
+noResults.textContent = "No Results Found";
+noResults.style.display = 'none';
+pageDiv.insertBefore(noResults, pageHeader.nextElementSibling);
+
+
+
 /*event listener for pagination menu. On click, 
 show the page that was selected and set the selected link to the active status so it highlights.
 */
