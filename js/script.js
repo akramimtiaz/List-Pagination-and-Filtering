@@ -79,6 +79,42 @@ const updateActiveLink = (pageSelected) => {
       }
    }
 }
+
+//Creates a list of students that match a Search Query.
+const searchStudents = (searchQuery) => {
+
+   //array used to hold those entries which match the search query
+   const matchingStudents = [];
+   //update the current list to contain all student entries, as we want to match against the entire list space.
+   currentList = listOfStudents;
+  
+   for(let i=0; i<currentList.length; i++){
+  
+      const studentName = currentList[i].firstElementChild.children[1].textContent;
+      const studentEmail = currentList[i].firstElementChild.children[2].textContent
+      
+      //if student name/email matches search query display the student and add them to matching students array
+      if(studentName.startsWith(searchQuery) || studentEmail.startsWith(searchQuery)){
+           currentList[i].style.display = 'list-item';
+           matchingStudents.push(currentList[i]);
+      }else{
+           currentList[i].style.display = 'none'; 
+      }
+   }
+
+   //update the current list variable to the list of matching students
+   currentList = matchingStudents;
+   //if there are no students that match the search query, display the H3 stating 'No Results Found'.
+   if(currentList.length === 0){
+       noResults.style.display = 'inline-block';
+   }else{
+       noResults.style.display = 'none';
+   }
+   //create a pagination menu appropriate to the number of students matching the search query
+   appendPageLinks(currentList);
+   
+}
+
    
 //key elements within the page
 const pageDiv        = document.querySelector('.page');
@@ -130,4 +166,15 @@ paginationDiv.addEventListener('click', (e) => {
       showPage(parseInt(pageSelected), currentList);
       updateActiveLink(pageSelected);
    }
+});
+
+/*event listeners for search-input and search-button. Extract the current value 
+in the searchInput field to determine the set of matching students.
+*/
+searchInput.addEventListener('keyup', (e) => {
+   searchStudents(searchInput.value);
+});
+
+searchButton.addEventListener('click', (e) => {
+   searchStudents(searchInput.value);
 });
